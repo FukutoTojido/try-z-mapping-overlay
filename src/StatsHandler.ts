@@ -1,4 +1,5 @@
 import type ZEngine from "@fukutotojido/z-engine";
+import type { Beatmap, DifficultyPoint } from "osu-classes";
 import { BeatmapDecoder } from "osu-parsers";
 
 export default class StatsHandler {
@@ -12,7 +13,9 @@ export default class StatsHandler {
 
 	beatmapFile: string | null = null;
 	decoder: BeatmapDecoder;
-	time = 0;
+
+	raw = "";
+	beatmap: Beatmap | null = null;
 
 	static POOL_TIME = 500;
 
@@ -37,7 +40,17 @@ export default class StatsHandler {
 		});
 
 		engine.register("beatmap.time.live", (_, newValue: number) => {
-			this.time = newValue;
+			const time = newValue;	
+			if (!this.beatmap) return;
+
+			const currentPoint = [
+				...this.beatmap.controlPoints.difficultyPoints,
+				...this.beatmap.controlPoints.timingPoints,
+			]
+				.sort((a, b) => a.startTime - b.startTime)
+				.findLast((point) => point.startTime <= time);
+			const baseSV = this.beatmap.difficulty.sliderMultiplier;
+			this.setSV((currentPoint as DifficultyPoint).sliderVelocity ?? 1, baseSV);
 		});
 
 		setInterval(() => this.beatmapPooling(), StatsHandler.POOL_TIME);
@@ -53,17 +66,11 @@ export default class StatsHandler {
 				throw new Error(await res.text());
 			}
 
-			const beatmap = this.decoder.decodeFromString(await res.text());
-			const currentPoint = [
-				...beatmap.controlPoints.difficultyPoints,
-				...beatmap.controlPoints.timingPoints,
-			]
-				.sort((a, b) => a.startTime - b.startTime)
-				.findLast((point) => point.startTime <= this.time);
-			const baseSV = beatmap.difficulty.sliderMultiplier;
+			const raw = await res.text();
+			if (this.raw === raw) return;
 
-			// biome-ignore lint/suspicious/noExplicitAny: Cannot import type from module, therefore cannot check for type
-			this.setSV((currentPoint as any).sliderVelocity ?? 1, baseSV);
+			this.raw = raw;
+			this.beatmap = this.decoder.decodeFromString(this.raw);
 		} catch (e) {
 			console.error(e);
 		}
