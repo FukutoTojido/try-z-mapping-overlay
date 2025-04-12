@@ -1,0 +1,21 @@
+{
+  "name": "try-z-mapping-overlay",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build --mode staging",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "typescript": "~5.7.2",
+    "vite": "^6.2.0"
+  },
+  "dependencies": {
+    "@fukutotojido/z-engine": "^1.0.5",
+    "@tailwindcss/vite": "^4.1.3",
+    "osu-parsers": "^4.1.7",
+    "tailwindcss": "^4.1.3"
+  }
+}

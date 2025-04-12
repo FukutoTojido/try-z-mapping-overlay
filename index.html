@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Try-Z Mapping Overlay</title>
+</head>
+
+<body>
+	<div id="nowPlaying"
+		class="absolute left-[1060px] bottom-[30px] w-[600px] h-[120px] flex flex-col justify-between p-5 bg-base rounded-[20px] border-surface-0 border-1 bg-center bg-no-repeat bg-cover overflow-hidden">
+		<div class="absolute top-0 left-0 w-full h-full bg-crust/90"></div>
+		<div class="relative flex w-full justify-between items-start">
+			<div class="flex flex-col flex-1 overflow-hidden">
+				<div id="artist" class="text-[15px] font-normal truncate">artist</div>
+				<div id="title" class="text-[24px] font-medium truncate">title</div>
+			</div>
+			<div class="flex flex-col shrink-0 items-end">
+				<div class="text-[12px] font-normal truncate">[<span id="version">version</span>]</div>
+				<div class="text-[15px] font-normal truncate">by <span id="mapper" class="font-medium">mapper</span>
+				</div>
+			</div>
+		</div>
+		<div class="relative flex w-full items-center justify-between text-[15px]">
+			<div class="flex items-center gap-5">
+				<div class="font-normal">CS <span id="cs" class="font-medium">0</span></div>
+				<div class="font-normal">AR <span id="ar" class="font-medium">0</span></div>
+				<div class="font-normal">OD <span id="od" class="font-medium">0</span></div>
+				<div class="font-normal">HP <span id="hp" class="font-medium">0</span></div>
+			</div>
+			<div class="font-normal">Star Rating <span id="stars" class="font-medium">0</span><span
+					class="font-medium">*</span></div>
+		</div>
+	</div>
+	<div id="stats"
+		class="absolute font-medium left-[30px] bottom-[30px] rounded-[20px] h-[42px] flex gap-[30px] items-center border-1 border-surface-0 text-[15px] px-5 bg-base">
+		<div class="text-[16px]">ANON TOKYO</div>
+		<div class="flex items-center gap-2.5">
+			<img src="./icons/BPM.svg">
+			<span><span id="bpm">0</span> BPM</span>
+		</div>
+		<div class="flex items-center gap-2.5">
+			<img src="./icons/SV.svg">
+			<div class="flex items-baseline gap-[5px]">
+				<div id="multiplier">0.00</div>
+				<div class="text-[11px]">x<span id="baseSV">0.00</span> base</div>
+			</div>
+		</div>
+		<div class="flex items-center gap-2.5">
+			<img src="./icons/Notes.svg">
+			<span id="circles">0</span>
+		</div>
+		<div class="flex items-center gap-2.5">
+			<img src="./icons/Sliders.svg">
+			<span id="sliders">0</span>
+		</div>
+		<div class="flex items-center gap-2.5">
+			<img src="./icons/Combo.svg">
+			<span><span id="maxCombo">0</span> x</span>
+		</div>
+		<span class="px-2.5 py-1 bg-surface-0 rounded-full"><span id="ss">0</span>pp if SS</span>
+	</div>
+	<script type="module" src="/src/main.ts"></script>
+</body>
+
+</html>
